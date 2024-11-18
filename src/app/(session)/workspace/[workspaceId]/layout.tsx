@@ -20,7 +20,7 @@ export default function WorkspaceLayout({
           </li>
         </ul>
       </div>
-      <div>{children}</div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 }
