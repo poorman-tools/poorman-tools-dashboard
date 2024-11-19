@@ -15,7 +15,9 @@ export default function CronListPage() {
       <h1 className="text-xl font-bold">Cronjobs</h1>
 
       <div className="my-4">
-        <Button>New Cronjob</Button>
+        <Link href={`/workspace/${workspaceId}/cron/create`}>
+          <Button>New Cronjob</Button>
+        </Link>
       </div>
 
       <table className="border w-full border-collapse">

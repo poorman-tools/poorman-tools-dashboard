@@ -1,11 +1,14 @@
 import useSWR from "swr";
-import { fetcher } from "./fetcher";
+import { fetcher, postFetcher } from "./fetcher";
 import {
+  ApiError,
   CronDetailAPIResponse,
   CronListAPIResponse,
   CronLogAPIResponse,
   CronLogDetailAPIResponse,
+  CronOptionInput,
 } from "./type";
+import useSWRMutation from "swr/mutation";
 
 export function useCronGetList(workspaceId: string) {
   return useSWR<CronListAPIResponse>(
@@ -47,4 +50,13 @@ export function useCronGetLogDetail(
     fetcher,
     { shouldRetryOnError: false }
   );
+}
+
+export function useCronCreate(workspaceId: string) {
+  return useSWRMutation<
+    { data: { Id: string } },
+    ApiError,
+    string,
+    CronOptionInput
+  >(`/v1/workspace/${workspaceId}/cron`, postFetcher);
 }

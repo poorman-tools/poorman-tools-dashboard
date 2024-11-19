@@ -16,7 +16,7 @@ export default function LoginPage() {
     trigger({ email, password, type: "email" }).then((data) => {
       if (data?.token) {
         localStorage.setItem("token", data.token);
-        router.push("/dashboard");
+        router.push("/");
       }
     });
   }, [email, password, trigger, router]);
