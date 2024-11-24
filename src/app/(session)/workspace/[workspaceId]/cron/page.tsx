@@ -11,41 +11,45 @@ export default function CronListPage() {
   if (!data) return <div>Loading...</div>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Cronjobs</h1>
+    <div>
+      <div className="p-3 border-b border-b-accent shadow font-semibold text-white">
+        <div>Cronjob</div>
+      </div>
 
-      <div className="my-4">
+      <div className="my-4 px-4">
         <Link href={`/workspace/${workspaceId}/cron/create`}>
           <Button>New Cronjob</Button>
         </Link>
       </div>
 
-      <table className="border w-full border-collapse">
-        <thead>
-          <tr>
-            <th className="px-2 p-1 border text-left">Name</th>
-            <th className="px-2 p-1 border text-left">Expression</th>
-            <th className="px-2 p-1 border text-left">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.data.map((cron) => {
-            return (
-              <tr key={cron.Id}>
-                <td className="px-2 p-1 border">
-                  <Link href={`/workspace/${workspaceId}/cron/${cron.Id}`}>
-                    {cron.Name}
-                  </Link>
-                </td>
-                <td className="px-2 p-1 border">
-                  {cron.Setting.schedule.expression}
-                </td>
-                <td className="px-2 p-1 border">{cron.Status}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="p-4">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th className="w-[250px]">Name</th>
+              <th>Description</th>
+              <th className="w-[150px]">Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.data.map((cron) => {
+              return (
+                <tr key={cron.Id}>
+                  <td>
+                    <Link href={`/workspace/${workspaceId}/cron/${cron.Id}`}>
+                      {cron.Name}
+                    </Link>
+                  </td>
+                  <td>{cron.Setting.schedule.expression}</td>
+                  <td>{cron.Status}</td>
+                  <td></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

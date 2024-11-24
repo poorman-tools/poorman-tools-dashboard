@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
 }
 
 @layer utilities {
@@ -14,8 +16,8 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: #313338;
+    --foreground: #fff;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -41,23 +43,24 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: #313338;
+    --foreground: #dbdbd7;
+    --background-light: #404249;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
+    --secondary: #2b2d31;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
+    --muted-foreground: #949ba4;
+    --accent: #1e1f22;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
+    --border: #404249;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
     --chart-1: 220 70% 50%;
@@ -75,4 +78,23 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.table thead th {
+  @apply border-b border-b-gray-500 text-left relative text-white;
+  font-weight: 500;
+}
+
+.table thead th:not(:last-child):before {
+  content: "";
+  @apply absolute right-0 top-2.5 h-5 w-0.5 bg-gray-500 rounded;
+}
+
+.table th,
+.table td {
+  @apply px-4 p-2 border-b;
 }
