@@ -1,12 +1,23 @@
 import useSWRMutation from "swr/mutation";
 import { ApiError } from "./type";
 
+interface EmailLogin {
+  type: "email";
+  email: string;
+  password: string;
+}
+
+interface GithubLogin {
+  type: "github";
+  code: string;
+}
+
 export function useApiLogin() {
   return useSWRMutation<
     { error?: string; token?: string },
     ApiError,
     string,
-    { type: "email"; email: string; password: string }
+    GithubLogin | EmailLogin
   >(
     "/v1/auth",
     async (url, { arg }) => {

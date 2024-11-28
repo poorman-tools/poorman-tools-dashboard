@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useApiLogin } from "@/lib/api/useApiLogin";
 import { LucideLoader } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
@@ -30,6 +31,12 @@ export default function LoginPage() {
         </p>
 
         {error && <p className="text-red-500">{error.message}</p>}
+
+        <Link
+          href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI}&scope=user`}
+        >
+          <Button>Login with Github</Button>
+        </Link>
 
         <Input
           placeholder="Email"
