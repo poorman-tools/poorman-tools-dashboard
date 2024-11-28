@@ -1,6 +1,6 @@
 "use client";
 
-import WorkspaceContainer from "@/components/workspace-container";
+import WorkspaceContainer from "@/components/containers/workspace-container";
 
 export default function WorkspaceLayout({
   children,

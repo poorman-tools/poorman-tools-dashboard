@@ -9,7 +9,7 @@ export default function DefaultPage() {
 
   useEffect(() => {
     if (user.Workspaces[0]) {
-      router.push(`/workspace/${user.Workspaces[0].Id}`);
+      router.push(`/w/${user.Workspaces[0].Id}`);
       return;
     }
   }, [user, router]);

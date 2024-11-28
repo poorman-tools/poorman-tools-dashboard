@@ -1,5 +1,5 @@
 "use client";
-import { useCronGetLogs } from "@/lib/api/api-cron";
+import { useCronGetLogs } from "@/lib/api/cron";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -40,7 +40,7 @@ export default function CronDetailPage() {
               <tr key={log.Id}>
                 <td className="px-2 p-1 border text-left">
                   <Link
-                    href={`/workspace/${workspaceId}/cron/${cronId}/logs/${log.StartedAt}`}
+                    href={`/w/${workspaceId}/cron/${cronId}/logs/${log.StartedAt}`}
                   >
                     {log.StartedAt}
                   </Link>

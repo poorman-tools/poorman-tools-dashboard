@@ -1,5 +1,5 @@
 "use client";
-import { useCronGetLogDetail } from "@/lib/api/api-cron";
+import { useCronGetLogDetail } from "@/lib/api/cron";
 import { useParams } from "next/navigation";
 
 export default function CronDetailPage() {

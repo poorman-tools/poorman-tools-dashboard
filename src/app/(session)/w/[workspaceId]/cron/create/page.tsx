@@ -1,7 +1,7 @@
 "use client";
 import { CronSettingEditor } from "@/components/cron-editor";
 import { Button } from "@/components/ui/button";
-import { useCronCreate } from "@/lib/api/api-cron";
+import { useCronCreate } from "@/lib/api/cron";
 import { CronOptionInput } from "@/lib/api/type";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,7 @@ export default function CreateCronPage() {
     createCron(setting).then((data) => {
       const cronId = data?.data?.Id;
       if (cronId) {
-        router.push(`/workspace/${workspaceId}/cron/${cronId}`);
+        router.push(`/w/${workspaceId}/cron/${cronId}`);
       }
     });
   }, [workspaceId, createCron, setting, router]);

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useCronGetList } from "@/lib/api/api-cron";
+import { useCronGetList } from "@/lib/api/cron";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default function CronListPage() {
       </div>
 
       <div className="my-4 px-4">
-        <Link href={`/workspace/${workspaceId}/cron/create`}>
+        <Link href={`/w/${workspaceId}/cron/create`}>
           <Button>New Cronjob</Button>
         </Link>
       </div>
@@ -37,7 +37,7 @@ export default function CronListPage() {
               return (
                 <tr key={cron.Id}>
                   <td>
-                    <Link href={`/workspace/${workspaceId}/cron/${cron.Id}`}>
+                    <Link href={`/w/${workspaceId}/cron/${cron.Id}`}>
                       {cron.Name}
                     </Link>
                   </td>

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useApiLogin } from "@/lib/api/useApiLogin";
+import { useApiLogin } from "@/lib/api/auth";
 import { LucideLoader } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

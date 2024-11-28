@@ -1,7 +1,7 @@
 "use client";
 import { createContext, PropsWithChildren, useContext } from "react";
 import { MeAPIResponse } from "../api/type";
-import useApiSession from "../api/useApiSession";
+import useApiSession from "../api/session";
 import { useRouter } from "next/navigation";
 
 const SessionContext = createContext<{ user: MeAPIResponse }>(

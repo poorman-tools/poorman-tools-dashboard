@@ -1,5 +1,5 @@
 "use client";
-import { useApiLogin } from "@/lib/api/useApiLogin";
+import { useApiLogin } from "@/lib/api/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
