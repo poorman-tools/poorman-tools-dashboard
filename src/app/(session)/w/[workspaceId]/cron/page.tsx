@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import Loading from "@/components/utilities/Loading";
 import { useCronGetList } from "@/lib/api/cron";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -8,7 +9,7 @@ export default function CronListPage() {
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const { data } = useCronGetList(workspaceId);
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <Loading />;
 
   return (
     <div>

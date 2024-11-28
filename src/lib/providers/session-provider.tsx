@@ -1,8 +1,8 @@
 "use client";
-import { createContext, PropsWithChildren, useContext } from "react";
-import { MeAPIResponse } from "../api/type";
-import useApiSession from "../api/session";
 import { useRouter } from "next/navigation";
+import { createContext, PropsWithChildren, useContext } from "react";
+import useApiSession from "../api/session";
+import { MeAPIResponse } from "../api/type";
 
 const SessionContext = createContext<{ user: MeAPIResponse }>(
   new Proxy(
@@ -26,7 +26,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const router = useRouter();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex w-screen h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   if (!user) {
