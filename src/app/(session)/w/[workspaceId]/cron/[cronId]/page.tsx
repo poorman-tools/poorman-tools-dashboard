@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/utilities/Loading";
 import { useCronGetLogs } from "@/lib/api/cron";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -11,7 +12,7 @@ export default function CronDetailPage() {
 
   const { data } = useCronGetLogs(workspaceId, cronId);
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <Loading />;
 
   const { data: logs, cron } = data;
 

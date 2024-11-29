@@ -1,9 +1,8 @@
 "use client";
-import { useParams, usePathname } from "next/navigation";
-import { PropsWithChildren } from "react";
 import { useSession } from "@/lib/providers/session-provider";
 import { LucideClock, LucideCone, LucideScanFace } from "lucide-react";
-import SessionContainer from "./session-container";
+import { useParams, usePathname } from "next/navigation";
+import { PropsWithChildren } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -12,17 +11,16 @@ import {
   SidebarSeparator,
   SidebarTitle,
 } from "../sidebar";
+import SessionContainer from "./session-container";
 
 export default function WorkspaceContainer({ children }: PropsWithChildren) {
   const { workspaceId } = useParams();
   const { user } = useSession();
+  const pathname = usePathname();
 
   const currentWorkspace = user.Workspaces.find(
     (workspace) => workspace.Id === workspaceId
   );
-
-  const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <SessionContainer>
