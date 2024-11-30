@@ -1,4 +1,5 @@
 "use client";
+import { ResourceLink } from "@/components/resource";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/utilities/Loading";
 import { useCronGetList } from "@/lib/api/cron";
@@ -38,9 +39,9 @@ export default function CronListPage() {
               return (
                 <tr key={cron.Id}>
                   <td>
-                    <Link href={`/w/${workspaceId}/cron/${cron.Id}`}>
+                    <ResourceLink href={`/w/${workspaceId}/cron/${cron.Id}`}>
                       {cron.Name}
-                    </Link>
+                    </ResourceLink>
                   </td>
                   <td>{cron.Setting.schedule.expression}</td>
                   <td>{cron.Status}</td>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export function ResourceDetailSection({ children }: PropsWithChildren) {
@@ -13,5 +14,16 @@ export function ResourceDetailItem({
       <label className="text-sm text-gray-300 font-bold">{label}</label>
       <p>{children}</p>
     </div>
+  );
+}
+
+export function ResourceLink({
+  href,
+  children,
+}: PropsWithChildren<{ href: string }>) {
+  return (
+    <Link href={href} className="hover:underline text-sky-300">
+      {children}
+    </Link>
   );
 }
