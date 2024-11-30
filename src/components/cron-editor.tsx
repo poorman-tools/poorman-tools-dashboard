@@ -1,9 +1,9 @@
 "use client";
 import { CronOptionInput } from "@/lib/api/type";
-import { Input } from "./ui/input";
 import { produce } from "immer";
 import { InputGroup } from "./input-group";
 import { Label } from "./ui/label";
+import { Input } from "./input";
 
 interface CronSettingEditorProps {
   value: CronOptionInput;
@@ -51,12 +51,12 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
       <InputGroup>
         <Label>Description</Label>
         <Input
-          value={value.name}
+          value={value.description}
           placeholder="Description"
           onChange={(e) => {
             onChange(
               produce(value, (draft) => {
-                draft.name = e.target.value;
+                draft.description = e.target.value;
               })
             );
           }}

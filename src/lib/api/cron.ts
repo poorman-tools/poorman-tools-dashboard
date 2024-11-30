@@ -60,3 +60,22 @@ export function useCronCreate(workspaceId: string) {
     CronOptionInput
   >(`/v1/workspace/${workspaceId}/cron`, postFetcher);
 }
+
+export function useCronUpdate(workspaceId: string, cronId: string) {
+  return useSWRMutation<unknown, ApiError, string, CronOptionInput>(
+    `/v1/workspace/${workspaceId}/cron/${cronId}`,
+    postFetcher
+  );
+}
+
+export function useCronDetail(workspaceId: string, cronId: string) {
+  return useSWR<CronDetailAPIResponse>(
+    `/v1/workspace/${workspaceId}/cron/${cronId}`,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
+}

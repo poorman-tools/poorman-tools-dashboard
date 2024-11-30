@@ -31,6 +31,8 @@ export interface CronAPIRecord {
   Name: string;
   Status: string;
   Setting: CronOptionInput;
+  CreatedAt: string;
+  FailedCount: number;
 }
 
 export interface CronListAPIResponse {

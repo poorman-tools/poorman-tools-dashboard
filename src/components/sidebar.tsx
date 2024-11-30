@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export function Sidebar({ children }: PropsWithChildren) {
-  return <div className="w-[250px] bg-secondary">{children}</div>;
+  return <div className="w-[250px] bg-secondary flex-shrink-0">{children}</div>;
 }
 
 export function SidebarTitle({ text }: { text?: string }) {
