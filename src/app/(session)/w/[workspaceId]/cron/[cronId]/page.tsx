@@ -109,9 +109,9 @@ export default function CronDetailPage() {
                 <td>{logIdx + 1}</td>
                 <td>
                   <ResourceLink
-                    href={`/w/${workspaceId}/cron/${cronId}/logs/${log.StartedAt}`}
+                    href={`/w/${workspaceId}/cron/${cronId}/logs/${log.Id}`}
                   >
-                    {log.StartedAt}
+                    {new Date(log.StartedAt).toLocaleString()}
                   </ResourceLink>
                 </td>
                 <td>{log.Status}</td>
