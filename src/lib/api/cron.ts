@@ -32,6 +32,21 @@ export function useCronGetDetail(workspaceId: string, cronId: string) {
   };
 }
 
+export async function fetchCronGetLogs(
+  workspaceId: string,
+  cronId: string,
+  limit: number,
+  cursor?: string
+) {
+  return (await fetcher(
+    `/v1/workspace/${workspaceId}/cron/${cronId}/logs?` +
+      new URLSearchParams({
+        limit: limit.toString(),
+        ...(cursor ? { cursor } : {}),
+      })
+  )) as CronLogAPIResponse;
+}
+
 export function useCronGetLogs(workspaceId: string, cronId: string) {
   return useSWR<CronLogAPIResponse>(
     `/v1/workspace/${workspaceId}/cron/${cronId}/logs`,

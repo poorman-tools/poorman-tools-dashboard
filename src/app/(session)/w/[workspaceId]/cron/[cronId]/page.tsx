@@ -1,7 +1,7 @@
 "use client";
 import Loading from "@/components/utilities/Loading";
 import cronstrue from "cronstrue";
-import { useCronGetLogs } from "@/lib/api/cron";
+import { fetchCronGetLogs } from "@/lib/api/cron";
 import { useParams } from "next/navigation";
 import {
   ResourceDetailItem,
@@ -10,21 +10,50 @@ import {
 } from "@/components/resource";
 import { Button } from "@/components/ui/button";
 import LinkButton from "@/components/link-button";
+import { useCallback, useEffect, useState } from "react";
+import { CronAPIRecord, CronDetailLogRecord } from "@/lib/api/type";
+import LoadMoreButton from "@/components/load-more-button";
 
 export default function CronDetailPage() {
   const { cronId, workspaceId } = useParams<{
     cronId: string;
     workspaceId: string;
   }>();
-  const { data } = useCronGetLogs(workspaceId, cronId);
 
-  if (!data) return <Loading />;
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [cursor, setCursor] = useState<string | undefined>(undefined);
+  const [cron, setCron] = useState<CronAPIRecord>();
+  const [logs, setLogs] = useState<CronDetailLogRecord[]>([]);
 
-  const {
-    data: { cron, logs },
-  } = data;
+  useEffect(() => {
+    fetchCronGetLogs(workspaceId, cronId, 20, undefined)
+      .then((res) => {
+        setCron(res.data.cron);
+        setLogs(res.data.logs);
+        setCursor(res.data.cursor);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [cronId, workspaceId]);
 
-  const expression = cron.Setting.schedule.expression
+  const onLoadMore = useCallback(() => {
+    setLoadingMore(true);
+    fetchCronGetLogs(workspaceId, cronId, 20, cursor)
+      .then((res) => {
+        setLogs((prev) => [...prev, ...res.data.logs]);
+        setCursor(res.data.cursor);
+      })
+      .finally(() => {
+        setLoadingMore(false);
+      });
+  }, [workspaceId, cronId, cursor]);
+
+  if (loading) return <Loading />;
+  if (!cron) return <Loading />;
+
+  const expression = (cron.Setting.schedule.expression ?? "")
     .replace("cron(", "")
     .replace(")", "");
 
@@ -65,6 +94,7 @@ export default function CronDetailPage() {
       <table className="table w-full">
         <thead>
           <tr>
+            <th className="w-[40px]">#</th>
             <th className="w-[220px]">Started At</th>
             <th className="w-[75px]">Status</th>
             <th className="w-[75px]">Success</th>
@@ -73,9 +103,10 @@ export default function CronDetailPage() {
           </tr>
         </thead>
         <tbody>
-          {logs.map((log) => {
+          {logs.map((log, logIdx) => {
             return (
               <tr key={log.Id}>
+                <td>{logIdx + 1}</td>
                 <td>
                   <ResourceLink
                     href={`/w/${workspaceId}/cron/${cronId}/logs/${log.StartedAt}`}
@@ -91,6 +122,17 @@ export default function CronDetailPage() {
             );
           })}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={6}>
+              <LoadMoreButton
+                text="Click here to load more logs"
+                loading={loadingMore}
+                onClick={onLoadMore}
+              />
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

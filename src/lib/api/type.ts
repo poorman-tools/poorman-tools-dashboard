@@ -1,3 +1,8 @@
+export interface APIResponse<T = unknown> {
+  data?: T;
+  error?: string;
+}
+
 export interface MeAPIResponse {
   data: {
     Id: string;
