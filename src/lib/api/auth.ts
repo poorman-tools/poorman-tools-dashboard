@@ -14,7 +14,7 @@ interface GithubLogin {
 
 export function useApiLogin() {
   return useSWRMutation<
-    { error?: string; token?: string },
+    { error?: string; data?: { token: string } },
     ApiError,
     string,
     GithubLogin | EmailLogin

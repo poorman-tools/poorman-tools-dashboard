@@ -15,8 +15,8 @@ export default function LoginPage() {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       trigger({ email, password, type: "email" }).then((data) => {
-        if (data?.token) {
-          localStorage.setItem("token", data.token);
+        if (data?.data?.token) {
+          localStorage.setItem("token", data.data?.token);
           window.location.replace("/");
         }
       });

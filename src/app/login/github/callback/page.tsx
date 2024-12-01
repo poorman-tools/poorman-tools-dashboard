@@ -13,8 +13,8 @@ export default function GithubCallback() {
 
     if (code) {
       trigger({ code, type: "github" }).then((data) => {
-        if (data?.token) {
-          localStorage.setItem("token", data.token);
+        if (data?.data?.token) {
+          localStorage.setItem("token", data.data?.token);
           router.push("/");
         }
       });

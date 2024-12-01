@@ -14,7 +14,10 @@ export default function CronDetailPage() {
 
   if (!data) return <Loading />;
 
-  const { cron, data: log } = data;
+  const {
+    data: { cron, log },
+  } = data;
+
   const { Content, ...rest } = log;
 
   return (

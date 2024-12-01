@@ -6,7 +6,7 @@ export default function useApiSession() {
   const result = useSWR<MeAPIResponse>("/v1/me", fetcher);
 
   return {
-    user: result.data,
+    user: result.data?.data,
     isLoading: !result.data && !result.error,
   };
 }

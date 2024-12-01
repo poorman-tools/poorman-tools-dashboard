@@ -1,11 +1,13 @@
 export interface MeAPIResponse {
-  Id: string;
-  Name: string;
-  Picture?: string;
-  Workspaces: {
+  data: {
     Id: string;
     Name: string;
-  }[];
+    Picture?: string;
+    Workspaces: {
+      Id: string;
+      Name: string;
+    }[];
+  };
 }
 interface CronActionInput {
   type: "fetch";
@@ -54,14 +56,16 @@ export interface CronDetailLogRecord {
 }
 
 export interface CronLogAPIResponse {
-  cron: CronAPIRecord;
-  cursor: string;
-  data: CronDetailLogRecord[];
+  data: {
+    logs: CronDetailLogRecord[];
+    cursor?: string;
+    cron: CronAPIRecord;
+  };
 }
 
 export interface CronLogDetailAPIResponse {
-  data: CronDetailLogRecord;
-  cron: CronAPIRecord;
+  data: { log: CronDetailLogRecord; cron: CronAPIRecord };
+  error?: string;
 }
 
 export class ApiError extends Error {

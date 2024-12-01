@@ -20,7 +20,10 @@ export default function CronDetailPage() {
 
   if (!data) return <Loading />;
 
-  const { data: logs, cron } = data;
+  const {
+    data: { cron, logs },
+  } = data;
+
   const expression = cron.Setting.schedule.expression
     .replace("cron(", "")
     .replace(")", "");
