@@ -2,9 +2,9 @@
 import { useRouter } from "next/navigation";
 import { createContext, PropsWithChildren, useContext } from "react";
 import useApiSession from "../api/session";
-import { MeAPIResponse } from "../api/type";
+import { MeRecord } from "../api/type";
 
-const SessionContext = createContext<{ user: MeAPIResponse }>(
+const SessionContext = createContext<{ user: MeRecord }>(
   new Proxy(
     {},
     {
@@ -14,7 +14,7 @@ const SessionContext = createContext<{ user: MeAPIResponse }>(
         );
       },
     }
-  ) as { user: MeAPIResponse }
+  ) as { user: MeRecord }
 );
 
 export function useSession() {

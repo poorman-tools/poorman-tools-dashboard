@@ -3,16 +3,18 @@ export interface APIResponse<T = unknown> {
   error?: string;
 }
 
-export interface MeAPIResponse {
-  data: {
+export interface MeRecord {
+  Id: string;
+  Name: string;
+  Picture?: string;
+  Workspaces: {
     Id: string;
     Name: string;
-    Picture?: string;
-    Workspaces: {
-      Id: string;
-      Name: string;
-    }[];
-  };
+  }[];
+}
+
+export interface MeAPIResponse {
+  data: MeRecord;
 }
 interface CronActionInput {
   type: "fetch";
