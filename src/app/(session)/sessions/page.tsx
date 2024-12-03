@@ -1,7 +1,6 @@
 "use client";
 
 import PersonalContainer from "@/components/containers/personal-container";
-import { mutate } from "swr";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -19,16 +18,32 @@ import { useRevokeToken, useSessionList } from "@/lib/api/session";
 
 export default function SessionsPage() {
   const [sessionToRevoke, setSessionToRevoke] = useState<string | null>(null);
-  const { data: sessionsResponse, error } = useSessionList();
-  const { trigger: revokeToken } = useRevokeToken();  
+  const { data: sessionsResponse, error, mutate } = useSessionList();
+  const { trigger: revokeToken } = useRevokeToken();
 
   const handleRevokeSession = async () => {
     if (!sessionToRevoke) return;
 
+    const previousSessions = sessionsResponse?.data;
+    await mutate(
+      previousSessions
+        ? {
+            data: previousSessions.filter(
+              (session) => session.SessionSuffix !== sessionToRevoke
+            ),
+          }
+        : undefined,
+      false
+    );
+
     try {
       await revokeToken({ SessionSuffix: sessionToRevoke });
-      mutate("/v1/auth/sessions");
+      mutate();
     } catch (error) {
+      await mutate(
+        previousSessions ? { data: previousSessions } : undefined,
+        false
+      );
       console.error("Error revoking session:", error);
     } finally {
       setSessionToRevoke(null);
