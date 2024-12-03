@@ -15,12 +15,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "../ui/button";
-import { postFetcher } from "@/lib/api/fetcher";
+import { useLogout } from "@/lib/api/auth";
 
 export default function PersonalContainer({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const router = useRouter();
+  const { trigger: logout } = useLogout();
 
   const handleLogout = async () => {
     try {
@@ -29,12 +30,7 @@ export default function PersonalContainer({ children }: PropsWithChildren) {
         throw new Error("No session token found");
       }
 
-      await postFetcher("/v1/auth/revoke", {
-        arg: {
-          SessionId: token,
-        },
-      });
-
+      await logout({ SessionId: token });
       localStorage.removeItem("token");
       router.push("/login");
     } catch (error) {

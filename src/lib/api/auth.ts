@@ -1,5 +1,6 @@
 import useSWRMutation from "swr/mutation";
 import { ApiError } from "./type";
+import { postFetcher } from "./fetcher";
 
 interface EmailLogin {
   type: "email";
@@ -42,3 +43,11 @@ export function useApiLogin() {
     }
   );
 }
+
+export function useLogout() {
+  return useSWRMutation<unknown, ApiError, string, { SessionId: string }>(
+    "/v1/auth/revoke",
+    postFetcher
+  );
+}
+

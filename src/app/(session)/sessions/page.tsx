@@ -1,8 +1,7 @@
 "use client";
 
 import PersonalContainer from "@/components/containers/personal-container";
-import { fetcher, postFetcher } from "@/lib/api/fetcher";
-import useSWR, { mutate } from "swr";
+import { mutate } from "swr";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -16,34 +15,18 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
-
-interface Session {
-  SessionSuffix: string;
-  CreatedAt: string;
-  LastUsedTimestamp: string;
-  UserAgent: string;
-}
-
-interface SessionsResponse {
-  data: Session[];
-}
+import { useRevokeToken, useSessionList } from "@/lib/api/session";
 
 export default function SessionsPage() {
   const [sessionToRevoke, setSessionToRevoke] = useState<string | null>(null);
-  const { data: sessionsResponse, error } = useSWR<SessionsResponse>(
-    "/v1/auth/sessions",
-    fetcher
-  );
+  const { data: sessionsResponse, error } = useSessionList();
+  const { trigger: revokeToken } = useRevokeToken();  
 
   const handleRevokeSession = async () => {
     if (!sessionToRevoke) return;
 
     try {
-      await postFetcher("/v1/auth/revoke", {
-        arg: {
-          SessionSuffix: sessionToRevoke,
-        },
-      });
+      await revokeToken({ SessionSuffix: sessionToRevoke });
       mutate("/v1/auth/sessions");
     } catch (error) {
       console.error("Error revoking session:", error);
