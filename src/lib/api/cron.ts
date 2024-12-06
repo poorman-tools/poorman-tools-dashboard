@@ -83,6 +83,15 @@ export function useCronUpdate(workspaceId: string, cronId: string) {
   );
 }
 
+export function useCronUpdateStatus(workspaceId: string, cronId: string) {
+  return useSWRMutation<
+    unknown,
+    ApiError,
+    string,
+    { status: "ENABLED" | "DISABLED" }
+  >(`/v1/workspace/${workspaceId}/cron/${cronId}/status`, postFetcher);
+}
+
 export function useCronDetail(workspaceId: string, cronId: string) {
   return useSWR<CronDetailAPIResponse>(
     `/v1/workspace/${workspaceId}/cron/${cronId}`,

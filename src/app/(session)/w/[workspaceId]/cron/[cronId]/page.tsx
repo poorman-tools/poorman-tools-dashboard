@@ -1,7 +1,7 @@
 "use client";
 import Loading from "@/components/utilities/Loading";
 import cronstrue from "cronstrue";
-import { fetchCronGetLogs } from "@/lib/api/cron";
+import { fetchCronGetLogs, useCronUpdateStatus } from "@/lib/api/cron";
 import { useParams } from "next/navigation";
 import {
   ResourceDetailItem,
@@ -13,6 +13,7 @@ import LinkButton from "@/components/link-button";
 import { useCallback, useEffect, useState } from "react";
 import { CronAPIRecord, CronDetailLogRecord } from "@/lib/api/type";
 import LoadMoreButton from "@/components/load-more-button";
+import { LucideLoader } from "lucide-react";
 
 export default function CronDetailPage() {
   const { cronId, workspaceId } = useParams<{
@@ -21,6 +22,8 @@ export default function CronDetailPage() {
   }>();
 
   const [loading, setLoading] = useState(true);
+  const { trigger: updateCronStatus, isMutating: loadingUpdateStatus } =
+    useCronUpdateStatus(workspaceId, cronId);
   const [loadingMore, setLoadingMore] = useState(false);
   const [cursor, setCursor] = useState<string | undefined>(undefined);
   const [cron, setCron] = useState<CronAPIRecord>();
@@ -50,6 +53,23 @@ export default function CronDetailPage() {
       });
   }, [workspaceId, cronId, cursor]);
 
+  const onToggleStatus = useCallback(() => {
+    if (!cron?.Status) return;
+    updateCronStatus({
+      status: cron.Status === "ENABLED" ? "DISABLED" : "ENABLED",
+    })
+      .then(() => {
+        setCron((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            Status: prev.Status === "ENABLED" ? "DISABLED" : "ENABLED",
+          };
+        });
+      })
+      .catch();
+  }, [cron?.Status, updateCronStatus]);
+
   if (loading) return <Loading />;
   if (!cron) return <Loading />;
 
@@ -64,7 +84,12 @@ export default function CronDetailPage() {
       <h1 className="text-xl font-semibold text-white">{cron.Name}</h1>
 
       <div className="my-4 flex gap-2">
-        <Button>Enable</Button>
+        <Button onClick={onToggleStatus} disabled={loadingUpdateStatus}>
+          {loadingUpdateStatus && (
+            <LucideLoader className="animate-spin" size={16} />
+          )}
+          {cron.Status !== "ENABLED" ? "Enable" : "Disable"}
+        </Button>
         <LinkButton href={`/w/${workspaceId}/cron/${cronId}/edit`}>
           Edit
         </LinkButton>
