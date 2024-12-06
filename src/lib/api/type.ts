@@ -88,3 +88,15 @@ export class ApiError extends Error {
     return this.data.error;
   }
 }
+
+export interface Session {
+  SessionSuffix: string;
+  CreatedAt: string;
+  LastUsedTimestamp: string;
+  UserAgent: string;
+}
+
+export interface SessionsResponse {
+  data: Session[];
+}
+
