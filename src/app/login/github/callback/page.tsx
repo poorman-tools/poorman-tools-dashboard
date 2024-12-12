@@ -12,9 +12,9 @@ export default function GithubCallback() {
     const code = searchParams.get("code");
 
     if (code) {
-      trigger({ code, type: "github" }).then((data) => {
-        if (data?.data?.token) {
-          localStorage.setItem("token", data.data?.token);
+      trigger({ code, type: "github" }).then((res) => {
+        if (res?.token) {
+          localStorage.setItem("token", res.token);
           router.push("/");
         }
       });

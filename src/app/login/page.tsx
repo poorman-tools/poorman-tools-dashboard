@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 import { useApiLogin } from "@/lib/api/auth";
 import { Github, LucideLoader } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
   const { trigger, error, isMutating } = useApiLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,10 +16,10 @@ export default function LoginPage() {
   const onLoginSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      trigger({ email, password, type: "email" }).then((data) => {
-        if (data?.data?.token) {
-          localStorage.setItem("token", data.data?.token);
-          window.location.replace("/");
+      trigger({ email, password, type: "email" }).then((res) => {
+        if (res?.token) {
+          localStorage.setItem("token", res.token);
+          router.push("/");
         }
       });
     },
