@@ -1,6 +1,6 @@
 import useSWRMutation from "swr/mutation";
-import { ApiError } from "./type";
 import { postFetcher } from "./fetcher";
+import { ApiError } from "./type";
 
 interface EmailLogin {
   type: "email";
@@ -15,7 +15,7 @@ interface GithubLogin {
 
 export function useApiLogin() {
   return useSWRMutation<
-    { error?: string; data?: { token: string } },
+    { error?: string; token?: string },
     ApiError,
     string,
     GithubLogin | EmailLogin
@@ -50,4 +50,3 @@ export function useLogout() {
     postFetcher
   );
 }
-
