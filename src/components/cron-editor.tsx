@@ -1,9 +1,9 @@
 "use client";
 import { CronOptionInput } from "@/lib/api/type";
 import { produce } from "immer";
+import { Input } from "./input";
 import { InputGroup } from "./input-group";
 import { Label } from "./ui/label";
-import { Input } from "./input";
 
 interface CronSettingEditorProps {
   value: CronOptionInput;
@@ -36,6 +36,8 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
       <InputGroup>
         <Label>Name (*)</Label>
         <Input
+          required
+          minLength={3}
           value={value.name}
           placeholder="Name"
           onChange={(e) => {
@@ -67,6 +69,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
         <Label>Schedule (*)</Label>
         <div className="flex gap-2">
           <Input
+            required
             className="font-mono"
             placeholder="Minute"
             value={minute}
@@ -80,6 +83,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
           />
 
           <Input
+            required
             className="font-mono"
             placeholder="Hour"
             value={hour}
@@ -93,6 +97,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
           />
 
           <Input
+            required
             className="font-mono"
             placeholder="DayOfMonth"
             value={dayOfMonth}
@@ -106,6 +111,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
           />
 
           <Input
+            required
             className="font-mono"
             placeholder="Month"
             value={month}
@@ -119,6 +125,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
           />
 
           <Input
+            required
             className="font-mono"
             placeholder="DayOfWeek"
             value={dayOfWeek}
@@ -132,6 +139,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
           />
 
           <Input
+            required
             className="font-mono"
             placeholder="Year"
             value={year}
@@ -150,6 +158,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
         <Label>Action (*)</Label>
         <div className="flex gap-2">
           <Input
+            required
             placeholder="Method"
             className="w-[150px]"
             value={value.action.method}
@@ -163,6 +172,7 @@ export function CronSettingEditor({ value, onChange }: CronSettingEditorProps) {
           />
 
           <Input
+            required
             placeholder="URL"
             value={value.action.url}
             onChange={(e) => {

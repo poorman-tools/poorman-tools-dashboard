@@ -3,9 +3,8 @@ import { CronSettingEditor } from "@/components/cron-editor";
 import { Button } from "@/components/ui/button";
 import { useCronCreate } from "@/lib/api/cron";
 import { CronOptionInput } from "@/lib/api/type";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { FormEvent, useCallback, useState } from "react";
 
 export default function CreateCronPage() {
   const { workspaceId } = useParams<{ workspaceId: string }>();
@@ -27,25 +26,31 @@ export default function CreateCronPage() {
 
   const { trigger: createCron, isMutating } = useCronCreate(workspaceId);
 
-  const onCreateCronClicked = useCallback(() => {
-    createCron(setting).then((data) => {
-      const cronId = data?.data?.Id;
-      if (cronId) {
-        router.push(`/w/${workspaceId}/cron/${cronId}`);
-      }
-    });
-  }, [workspaceId, createCron, setting, router]);
+  const onCreateCronSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      createCron(setting).then((data) => {
+        const cronId = data?.data?.Id;
+        if (cronId) {
+          router.push(`/w/${workspaceId}/cron/${cronId}`);
+        }
+      });
+    },
+
+    [workspaceId, createCron, setting, router]
+  );
 
   return (
-    <div className="p-4 max-w-[700px] flex flex-col gap-4">
-      <h1 className="font-bold text-xl mb-4">Create Cronjob</h1>
-      <CronSettingEditor value={setting} onChange={setSetting} />
+    <form onSubmit={onCreateCronSubmit}>
+      <div className="p-4 max-w-[700px] flex flex-col gap-4">
+        <h1 className="font-bold text-xl mb-4">Create Cronjob</h1>
+        <CronSettingEditor value={setting} onChange={setSetting} />
 
-      <div>
-        <Button disabled={isMutating} onClick={onCreateCronClicked}>
-          Create Cron
-        </Button>
+        <div className="flex justify-end">
+          <Button disabled={isMutating}>Create Cron</Button>
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
