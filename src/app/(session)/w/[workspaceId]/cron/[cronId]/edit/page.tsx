@@ -35,9 +35,9 @@ function CronDetailEditPageBody({
 
   return (
     <form onSubmit={onSaveSubmit}>
-      <div className="p-8 max-w-[800px]">
+      <div className="p-4 max-w-[700px] flex flex-col gap-4">
         <CronSettingEditor value={value} onChange={setValue} />
-        <div className="mt-8">
+        <div className="flex justify-end">
           <Button disabled={isMutating}>Save</Button>
         </div>
       </div>
