@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useCronDetail, useCronUpdate } from "@/lib/api/cron";
 import { CronOptionInput } from "@/lib/api/type";
 import { useParams, useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 
 function CronDetailEditPageBody({
   initialValue,
@@ -22,21 +22,26 @@ function CronDetailEditPageBody({
   );
   const [value, setValue] = useState<CronOptionInput>(initialValue);
 
-  const onSaveClicked = useCallback(() => {
-    updateCron(value).then(() => {
-      router.push(`/w/${workspaceId}/cron/${cronId}`);
-    });
-  }, [updateCron, value, router, cronId, workspaceId]);
+  const onSaveSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      updateCron(value).then(() => {
+        router.push(`/w/${workspaceId}/cron/${cronId}`);
+      });
+    },
+    [updateCron, value, router, cronId, workspaceId]
+  );
 
   return (
-    <div className="p-8 max-w-[800px]">
-      <CronSettingEditor value={value} onChange={setValue} />
-      <div className="mt-8">
-        <Button disabled={isMutating} onClick={onSaveClicked}>
-          Save
-        </Button>
+    <form onSubmit={onSaveSubmit}>
+      <div className="p-4 max-w-[700px] flex flex-col gap-4">
+        <CronSettingEditor value={value} onChange={setValue} />
+        <div className="flex justify-end">
+          <Button disabled={isMutating}>Save</Button>
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
 
